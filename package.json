@@ -1,5 +1,5 @@
 {
-  "name": "cffs",
+  "name": "cffs-image-tool",
   "version": "1.0.0",
   "description": "CompactFlash Filesystem Image Tool for A.C. Wright 6502 Project",
   "type": "module",
