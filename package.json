@@ -1,0 +1,26 @@
+{
+  "name": "cffs",
+  "version": "1.0.0",
+  "description": "CompactFlash Filesystem Image Tool for A.C. Wright 6502 Project",
+  "type": "module",
+  "main": "dist/cli.js",
+  "bin": {
+    "cffs": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js"
+  },
+  "keywords": ["6502", "compactflash", "filesystem"],
+  "author": "A.C. Wright",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^14.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}
