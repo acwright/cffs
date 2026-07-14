@@ -5,13 +5,14 @@ import {
   DATA_START,
 } from './constants.js';
 import { DirEntry } from './types.js';
-import { readSector, writeSector } from './image.js';
+import { readSector, writeSector, diskBaseLba } from './image.js';
 
 /**
- * Parse all 16 directory entries from LBA 0.
+ * Parse all 16 directory entries from the given disk's directory sector.
+ * Start sectors are stored relative to the disk's base LBA.
  */
-export function readDirectory(buf: Buffer): DirEntry[] {
-  const sector = readSector(buf, DIR_LBA);
+export function readDirectory(buf: Buffer, disk = 0): DirEntry[] {
+  const sector = readSector(buf, diskBaseLba(disk) + DIR_LBA);
   const entries: DirEntry[] = [];
 
   for (let i = 0; i < MAX_FILES; i++) {
@@ -29,9 +30,9 @@ export function readDirectory(buf: Buffer): DirEntry[] {
 }
 
 /**
- * Serialize directory entries back to LBA 0.
+ * Serialize directory entries back to the given disk's directory sector.
  */
-export function writeDirectory(buf: Buffer, entries: DirEntry[]): void {
+export function writeDirectory(buf: Buffer, entries: DirEntry[], disk = 0): void {
   const sector = Buffer.alloc(SECTOR_SIZE);
 
   for (const entry of entries) {
@@ -49,7 +50,7 @@ export function writeDirectory(buf: Buffer, entries: DirEntry[]): void {
     // Reserved bytes stay zeroed
   }
 
-  writeSector(buf, DIR_LBA, sector);
+  writeSector(buf, diskBaseLba(disk) + DIR_LBA, sector);
 }
 
 /**

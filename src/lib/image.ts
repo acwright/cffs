@@ -1,5 +1,31 @@
 import { readFileSync, writeFileSync } from 'node:fs';
-import { SECTOR_SIZE } from './constants.js';
+import { SECTOR_SIZE, SECTORS_PER_DISK, MAX_DISKS } from './constants.js';
+
+/**
+ * Absolute base LBA of a disk bank. Disk n starts at LBA n * SECTORS_PER_DISK,
+ * where its directory sector lives; data sectors follow contiguously.
+ */
+export function diskBaseLba(disk: number): number {
+  return disk * SECTORS_PER_DISK;
+}
+
+/**
+ * Validate a disk number and ensure its region fits within the image.
+ * Throws with a descriptive message otherwise.
+ */
+export function validateDisk(buf: Buffer, disk: number): void {
+  if (!Number.isInteger(disk) || disk < 0 || disk >= MAX_DISKS) {
+    throw new Error(`Invalid disk: ${disk} (must be 0-${MAX_DISKS - 1})`);
+  }
+  const totalSectors = buf.length / SECTOR_SIZE;
+  const base = diskBaseLba(disk);
+  if (base + SECTORS_PER_DISK > totalSectors) {
+    const availableDisks = Math.floor(totalSectors / SECTORS_PER_DISK);
+    throw new Error(
+      `Disk ${disk} does not fit in image: it holds ${availableDisks} disk(s) (0-${availableDisks - 1})`
+    );
+  }
+}
 
 /**
  * Read an entire image file into a Buffer.
