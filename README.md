@@ -1,6 +1,6 @@
 # cffs
 
-A CLI tool for creating and managing CompactFlash filesystem images for the A.C. Wright 6502 project.
+A CLI tool for creating and managing CompactFlash filesystem images for the [A.C. Wright 6502](https://github.com/acwright/6502-ACE) family of computer systems.
 
 The card is divided into up to **256 "disk" banks of 1 MB each** (2048 sectors × 512 bytes), for a maximum usable capacity of **256 MB**. Each disk is an independent flat filesystem: a single 512-byte directory sector (holding up to 16 entries in 8.3 filename format) followed by contiguous data sectors. Disk 0 is the default; other commands target a disk with the `--disk` / `-d` flag. This mirrors the `DISK n` (BASIC) / `#NN` (Monitor) banking in the 6502 BIOS.
 
@@ -113,6 +113,13 @@ Each directory entry is 32 bytes:
 | 12     | 2      | Start sector |
 | 14     | 2      | File size    |
 | 16     | 16     | Reserved     |
+
+## Related
+
+- [6502-ACE](https://github.com/acwright/6502-ACE) — the hardware, and the index of the whole family
+- [6502-BIOS](https://github.com/acwright/6502-BIOS) — the firmware whose filesystem this tool writes
+- [6502-EMULATOR](https://github.com/acwright/6502-EMULATOR) — mount an image built here as the emulator's CF card
+- [bastok](https://github.com/acwright/bastok) — produces the `.prg` / `.bas` images you put on a disk
 
 ## License
 
