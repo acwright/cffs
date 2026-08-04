@@ -4,6 +4,9 @@ A CLI tool for creating and managing CompactFlash filesystem images for the [A.C
 
 The card is divided into up to **256 "disk" banks of 1 MB each** (2048 sectors × 512 bytes), for a maximum usable capacity of **256 MB**. Each disk is an independent flat filesystem: a single 512-byte directory sector (holding up to 16 entries in 8.3 filename format) followed by contiguous data sectors. Disk 0 is the default; other commands target a disk with the `--disk` / `-d` flag. This mirrors the `DISK n` (BASIC) / `#NN` (Monitor) banking in the 6502 BIOS.
 
+> 📖 **Guide:** [AC6502 Documentation](https://acwright.github.io/6502-DOCS/) — the user's and programmer's guide for the whole family.
+> See [the tool belt](https://acwright.github.io/6502-DOCS/crossdev/tools) and [Storage](https://acwright.github.io/6502-DOCS/using/storage).
+
 ## Features
 
 - Create blank CF images by byte size or by disk-bank count
@@ -120,6 +123,7 @@ Each directory entry is 32 bytes:
 - [6502-BIOS](https://github.com/acwright/6502-BIOS) — the firmware whose filesystem this tool writes
 - [6502-EMULATOR](https://github.com/acwright/6502-EMULATOR) — mount an image built here as the emulator's CF card
 - [bastok](https://github.com/acwright/bastok) — produces the `.prg` / `.bas` images you put on a disk
+- [6502-DOCS](https://github.com/acwright/6502-DOCS) — the documentation site: the cross-development guide and the storage chapter
 
 ## License
 
