@@ -2,3 +2,8 @@ node_modules/
 dist/
 *.img
 .DS_Store
+
+# Planning documents are kept local
+VDP-ASSESSMENT.md
+VDP-PLAN.md
+/PLAN.md
