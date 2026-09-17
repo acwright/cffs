@@ -1,6 +1,6 @@
 {
   "name": "cffs-image-tool",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "CompactFlash Filesystem Image Tool for the AC6502",
   "type": "module",
   "main": "dist/cli.js",
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/cli.ts",
-    "start": "node dist/cli.js"
+    "start": "node dist/cli.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": ["6502", "compactflash", "filesystem"],
   "author": "A.C. Wright",

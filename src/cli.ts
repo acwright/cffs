@@ -17,7 +17,7 @@ const program = new Command();
 program
   .name('cffs')
   .description('CompactFlash Filesystem Image Tool for the AC6502')
-  .version('1.1.0');
+  .version('1.1.1');
 
 /**
  * Parse a size string like "32M", "512K", "1G", or a plain number (bytes).
