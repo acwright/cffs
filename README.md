@@ -2,7 +2,7 @@
 
 A CLI tool for creating and managing CompactFlash filesystem images for the [AC6502](https://github.com/acwright/6502-ACE) family of computer systems.
 
-The card is divided into up to **256 "disk" banks of 1 MB each** (2048 sectors × 512 bytes), for a maximum usable capacity of **256 MB**. Each disk is an independent flat filesystem: a single 512-byte directory sector (holding up to 16 entries in 8.3 filename format) followed by contiguous data sectors. Disk 0 is the default; other commands target a disk with the `--disk` / `-d` flag. This mirrors the `DISK n` (BASIC) / `#NN` (Monitor) banking in the 6502 BIOS.
+The card is divided into up to **256 "disk" banks of 1 MB each** (2048 sectors × 512 bytes), for a maximum usable capacity of **256 MB**. Each disk is an independent flat filesystem: a single 512-byte directory sector (holding up to 16 entries in 8.3 filename format) followed by contiguous data sectors. Disk 0 is the default; other commands target a disk with the `--disk` / `-d` flag. This mirrors `DISK n` in BIOS BASIC (and `#NN` in the BIOS 1.x Monitor).
 
 > 📖 **Guide:** [AC6502 Documentation](https://acwright.github.io/6502-DOCS/) — the user's and programmer's guide for the whole family.
 > See [the tool belt](https://acwright.github.io/6502-DOCS/crossdev/tools) and [Storage](https://acwright.github.io/6502-DOCS/using/storage).
@@ -84,6 +84,23 @@ A file may not spill past its disk's 1 MB region; adding a file that would
 exceed it fails with a "not enough space on disk" error, matching the BIOS
 disk-full guard. The chosen disk must also exist within the image's size.
 
+### On the machine
+
+The format is the same in BIOS 1.x and 2.0, so an image built here works with both.
+These BASIC commands read and write the files, on the disk selected with `DISK n`:
+
+| Command | What it does |
+|---------|--------------|
+| `DIR`, `DISK n`, `DEL "name"`, `FORMAT` | List, select, delete and erase, as the tool's `list`, `--disk`, `remove` and `clear` do |
+| `LOAD "name"` / `SAVE "name"` | A tokenized BASIC program image at `$0800`, with no header (bastok's `.prg`) |
+| `BLOAD addr,"name"` / `BSAVE addr,len,"name"` | Raw bytes at any address |
+| `VLOAD "name",addr` | **BIOS 2.0:** copies a file into PICOVDP video memory at `addr`, exactly its length |
+
+Filenames are 8.3, and a file is at most 65,535 bytes (its size is 16-bit), which is
+also the most `VLOAD` can place. See the BIOS's
+[CompactFlash Storage](https://github.com/acwright/6502-BIOS#compactflash-storage)
+section and the guide's [Storage](https://acwright.github.io/6502-DOCS/using/storage) chapter.
+
 ### Development
 
 Run directly from TypeScript without compiling:
@@ -122,7 +139,7 @@ Each directory entry is 32 bytes:
 - [6502-ACE](https://github.com/acwright/6502-ACE) — the hardware, and the index of the whole family
 - [6502-BIOS](https://github.com/acwright/6502-BIOS) — the firmware whose filesystem this tool writes
 - [6502-EMULATOR](https://github.com/acwright/6502-EMULATOR) — mount an image built here as the emulator's CF card
-- [bastok](https://github.com/acwright/bastok) — produces the `.prg` / `.bas` images you put on a disk
+- [bastok](https://github.com/acwright/bastok) — produces the `.prg` / `.bas` images you put on a disk (its token table differs between BIOS 1.x and 2.x)
 - [6502-DOCS](https://github.com/acwright/6502-DOCS) — the documentation site: the cross-development guide and the storage chapter
 
 ## License
