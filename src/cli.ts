@@ -16,7 +16,7 @@ const program = new Command();
 
 program
   .name('cffs')
-  .description('CompactFlash Filesystem Image Tool for A.C. Wright 6502 Project')
+  .description('CompactFlash Filesystem Image Tool for the AC6502')
   .version('1.1.0');
 
 /**

@@ -1,7 +1,7 @@
 {
   "name": "cffs-image-tool",
   "version": "1.1.0",
-  "description": "CompactFlash Filesystem Image Tool for A.C. Wright 6502 Project",
+  "description": "CompactFlash Filesystem Image Tool for the AC6502",
   "type": "module",
   "main": "dist/cli.js",
   "bin": {
